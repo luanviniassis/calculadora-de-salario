@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Salário</title>
+    <style>
+        body {
+            background-image: url('sua-imagem.jpg'); /* Substitua 'sua-imagem.jpg' pelo nome do arquivo da imagem */
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.7); /* Transparência no fundo do conteúdo */
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: auto;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: calc(100% - 20px);
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .creditos {
+            margin-top: 20px;
+            font-size: 14px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Salário</h1>
+        <form>
+            <label>Horas trabalhadas no mês:</label>
+            <input type="number" id="horas" placeholder="Exemplo: 160">
+            
+            <label>Valor por hora (R$):</label>
+            <input type="number" id="valorHora" step="0.01" placeholder="Exemplo: 25.50">
+            
+            <label>Valor do fretado (R$):</label>
+            <input type="number" id="fretado" step="0.01" placeholder="Exemplo: 100.00">
+            
+            <label>Valor do refeitório (R$):</label>
+            <input type="number" id="refeitorio" step="0.01" placeholder="Exemplo: 150.00">
+            
+            <label>Valor da Unimed (R$):</label>
+            <input type="number" id="unimed" step="0.01" placeholder="Exemplo: 200.00">
+            
+            <label>Salário Bruto (R$):</label>
+            <input type="number" id="salarioBruto" placeholder="Calculado automaticamente" disabled>
+            
+            <label>Salário Líquido (R$):</label>
+            <input type="number" id="salarioLiquido" placeholder="Calculado automaticamente" disabled>
+            
+            <button type="button" onclick="calcularSalario()">Calcular Salário</button>
+        </form>
+
+        <p class="creditos">Desenvolvido por Luan Assis</p>
+    </div>
+    
+    <script>
+        function calcularSalario() {
+            const horas = parseFloat(document.getElementById('horas').value) || 0;
+            const valorHora = parseFloat(document.getElementById('valorHora').value) || 0;
+            const fretado = parseFloat(document.getElementById('fretado').value) || 0;
+            const refeitorio = parseFloat(document.getElementById('refeitorio').value) || 0;
+            const unimed = parseFloat(document.getElementById('unimed').value) || 0;
+
+            const salarioBruto = horas * valorHora;
+            let imposto = 0;
+
+            if (salarioBruto > 7500) imposto = salarioBruto * 0.275;
+            else if (salarioBruto > 4664.01) imposto = salarioBruto * 0.225;
+            else if (salarioBruto > 3751.01) imposto = salarioBruto * 0.15;
+            else if (salarioBruto > 2824.01) imposto = salarioBruto * 0.075;
+
+            const descontos = fretado + refeitorio + unimed + imposto;
+            const salarioLiquido = salarioBruto - descontos;
+
+            document.getElementById('salarioBruto').value = salarioBruto.toFixed(2);
+            document.getElementById('salarioLiquido').value = salarioLiquido.toFixed(2);
+        }
+    </script>
+</body>
+</html>
